@@ -10,7 +10,7 @@ export default function AppNavBar() {
     // const [user, setUser] = useState(localStorage.getItem("token"));
 
     return (
-        <Navbar expand="lg" className="bg-primary">
+        <Navbar expand="lg" className="navbar bg-primary">
             <Container fluid>
                 <Navbar.Brand as={NavLink} to="/">Fitness Tracker</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
