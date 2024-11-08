@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Table, Button, ListGroup, Modal, Form } from 'react-bootstrap';
+import { Button, Card, Row, Col, Modal, Form } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 import UserContext from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -168,25 +168,33 @@ export default function Workouts() {
     return (
         <div className="workouts-page">
             <h1>My Workouts</h1>
-            <Button variant="primary" onClick={() => setShowModal(true)}>
+            <Button variant="primary" id="addWorkout" onClick={() => setShowModal(true)}>
                 Add New Workout
             </Button>
-            <Table striped bordered hover className="mt-4">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Duration (Minutes)</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {workouts.map((workout) => (
-                        <tr key={workout._id}>
-                            <td>{capitalizeFirstLetter(workout.name)}</td>
-                            <td>{workout.duration}</td>
-                            <td>{capitalizeFirstLetter(workout.status)}</td>
-                            <td>
+            <Row className="mt-4">
+                {workouts.map((workout) => (
+                    <Col sm={12} md={6} lg={4} key={workout._id}>
+                        <Card className="mb-4">
+                            <Card.Body>
+                                <Card.Title>{capitalizeFirstLetter(workout.name)}</Card.Title>
+                                <Card.Text>
+                                    <strong>Duration:</strong> {workout.duration} minutes
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Date Added:</strong> {new Date(workout.dateAdded).toLocaleString('en-US', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        hour12: true,
+                                    })}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Status:</strong> {capitalizeFirstLetter(workout.status)}
+                                </Card.Text>
+                                
+
                                 <Button
                                     variant={workout.status === 'completed' ? 'secondary' : 'warning'}
                                     size="sm"
@@ -212,11 +220,11 @@ export default function Workouts() {
                                 >
                                     Delete
                                 </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
 
             {/* Modal for adding a new workout */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
